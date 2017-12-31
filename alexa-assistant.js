@@ -20,6 +20,7 @@ var CLIENT_ID = process.env.CLIENT_ID;
 var CLIENT_SECRET = process.env.CLIENT_SECRET;
 var REDIRECT_URL = process.env.REDIRECT_URL;
 var API_ENDPOINT = process.env.API_ENDPOINT;
+var ALEXA_APP_ID = process.env.ALEXA_APP_ID;
 
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
@@ -205,6 +206,7 @@ var handlers = {
 
 exports.handler = function(event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
+    alexa.appId = ALEXA_APP_ID;
     alexa.registerHandlers(handlers);
     alexa.execute();
 };
