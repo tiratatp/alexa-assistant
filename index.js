@@ -14,6 +14,8 @@ const PORT = process.env.PORT || 5000;
 express()
 	.use(bodyParser.json({ type: 'application/json' }))
 	.post('/alexa/', (req, res) => {
+		console.log(req);
+		console.log(req.body);
 	    const ctx = context();
 	    alexaAssistant.handler(req.body, ctx);
 	    ctx.Promise
