@@ -2,19 +2,14 @@
 
 var Alexa = require('alexa-sdk');
 var google = require('googleapis');
-var every = require('every-moment');
-var wait = require('wait-one-moment');
-var grpc = require('grpc')
-var path = require('path');
+var grpc = require('grpc');
+var resolve = require('path').resolve;
 
 // Google Assistant SDK object
 var assistant = null;
 
-// create JSON string to hold config
-var config = {};
-
 // Get Google Credentials from Evironment Variables
-var OAuth2 = google.auth.OAuth2; // from googleapis module
+var OAuth2 = google.auth.OAuth2;
 const VERSION_NUMBER = '1.1';
 var CLIENT_ID = process.env.CLIENT_ID;
 var CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -27,7 +22,7 @@ var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 // load assistant API proto and bind using grpc
 const protoDescriptor = grpc.load({
     file: 'google/assistant/embedded/v1alpha2/embedded_assistant.proto',
-    root: path.resolve(__dirname, 'submodules/googleapis')
+    root: resolve(__dirname, 'submodules/googleapis')
 });
 
 const EmbeddedAssistantClient = protoDescriptor.google.assistant.embedded.v1alpha2.EmbeddedAssistant;
@@ -37,7 +32,7 @@ const callCreds = new grpc.Metadata();
 // used by Google Assistant SDK
 var conversation_State = Buffer.alloc(0);
 
-var handlers = {
+const handlers = {
     // Sent when the user invokes your skill without providing a specific intent.
     'LaunchRequest': () => {
         // Check for required environment variables and throw spoken error if not present
@@ -54,7 +49,7 @@ var handlers = {
             this.emit(':tell', 'ERROR! API endpoint is not set')
         }
 
-        if (!this.event.session || !this.event.session.user.accessToken) {
+        if (!this.event.session.user.accessToken) {
             this.emit(':tellWithLinkAccountCard', "You must link your Google account to use this skill. Please use the link in the Alexa app to authorise your Google Account.");
         } else {
             this.emit(':ask', "How may I help?");
@@ -78,10 +73,7 @@ var handlers = {
             this.emit(':tell', 'ERROR! API endpoint is not set')
         }
 
-        console.log(this.event);
-        console.log(this.emit);
-
-        if (!this.event.session || !this.event.session.user.accessToken) {
+        if (!this.event.session.user.accessToken) {
             this.emit(':tellWithLinkAccountCard', "You must link your Google account to use this skill. Please use the link in the Alexa app to authorise your Google Account.");
             return;
         }
@@ -147,10 +139,7 @@ var handlers = {
                 console.log('End of Utterance received');
                 conversation.end();
             }
-        })
-
-        console.log("Creating Audio config");
-        console.log('Current ConversationState is', conversation_State);
+        });
 
         var assistRequest = {
             config: {

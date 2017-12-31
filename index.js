@@ -15,6 +15,7 @@ express()
 	.use(bodyParser.json({ type: 'application/json' }))
 	.post('/alexa/', (req, res) => {
 	    const ctx = context();
+	    console.log(req.body);
 	    alexaAssistant.handler(req.body, ctx);
 	    ctx.Promise
 	        .then(resp => {  return res.status(200).json(resp); })
