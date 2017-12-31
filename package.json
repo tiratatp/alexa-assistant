@@ -16,14 +16,13 @@
     "every-moment": "^0.0.1",
     "wait-one-moment": "^0.0.2"
   },
-  "devDependencies": {
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tiratatp/alexa-assistant"
   },
   "keywords": [
     "node",
+    "heroku",
     "alexa",
     "google assistant"
   ],
