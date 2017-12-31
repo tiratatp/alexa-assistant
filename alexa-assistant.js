@@ -126,7 +126,7 @@ var handlers = {
                 console.log("Utterance recieved from another intent: " + overrideText);
 
             } else {
-                // use detected utterance  
+                // use detected utterance
                 alexaUtteranceText = this.event.request.intent.slots.search.value;
                 var alexaUtteranceText_original = this.event.request.intent.slots.search.value;
             }
@@ -329,7 +329,7 @@ var handlers = {
             setupTotal = new Date().getTime() - setupStart;
 
 
-            // Google Assistant API does not accept text input        
+            // Google Assistant API does not accept text input
             // So we convert Alexa result text to audio stream using AWS Polly
 
             pollyStart = new Date().getTime();
@@ -548,7 +548,7 @@ var handlers = {
                 // Any more than this then we risk major clipping
                 vol.setVolume(1.75);
 
-                // Create function to upload MP3 file to S3 
+                // Create function to upload MP3 file to S3
                 function uploadFromStream(s3) {
                     var pass = new Stream.PassThrough();
                     var params = {
@@ -577,7 +577,7 @@ var handlers = {
 
                                 if (url) {
                                     // ampersands are not valid in SSML so we need to escape these out with &amp;
-                                    url = url.replace(/&/g, '&amp;'); // replace ampersands    
+                                    url = url.replace(/&/g, '&amp;'); // replace ampersands
                                     signedURL = url;
 
                                     var cardContent =
@@ -667,7 +667,7 @@ var handlers = {
 
 
 
-            /// end of else /////       
+            /// end of else /////
 
 
         };
@@ -690,9 +690,8 @@ var handlers = {
         if (microphoneOpen == true) {
             this.emit('SearchIntent', message);
         }
-
-
     },
+
     'AMAZON.CancelIntent': function() {
         console.log('Cancel Intent')
         var message = 'CANCEL';
@@ -700,7 +699,6 @@ var handlers = {
             this.emit('SearchIntent', message);
         }
     },
-
 
     'SessionEndedRequest': function() {
         console.log('Session ended request');
@@ -715,7 +713,6 @@ var handlers = {
         if (microphoneOpen == true) {
             this.emit('SearchIntent', message);
         }
-
     }
 };
 
