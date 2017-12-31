@@ -8,7 +8,7 @@ const context = require('aws-lambda-mock-context');
 // alexa-assistant.js contains the lambda function for Alexa as in https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs
 const alexaAssistant = require('./alexa-assistant');
 
-const PORT = process.env.port || 8080;
+const PORT = process.env.PORT || 5000;
 
 // your service will be available on <YOUR_IP>/alexa
 express()
@@ -23,6 +23,4 @@ express()
 	        .then(resp => {  return res.status(200).json(resp); })
 	        .catch(err => {  console.log(err); })
 	})
-	.listen(PORT);
-
-console.log("Listening on port " + PORT);
+	.listen(PORT, () => console.log(`Listening on ${ PORT }`));
