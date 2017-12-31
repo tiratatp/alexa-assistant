@@ -18,7 +18,7 @@ app.post('/alexa/', function (req, res) {
     lambda.handler(req.body, ctx);
     ctx.Promise
         .then(resp => {  return res.status(200).json(resp); })
-        .catch(err => {  console.log(err);//add your error handling stuff })
+        .catch(err => {  console.log(err); })
 });
 
 app.listen(PORT);
