@@ -1,12 +1,12 @@
 'use strict';
 
-var alexa = require("alexa-app");
-var google = require('./node_modules/googleapis');
+var Alexa = require('alexa-sdk');
+var google = require('googleapis');
 var fs = require('fs');
 var every = require('every-moment');
 var wait = require('wait-one-moment');
 var grpc = require('grpc')
-var resolve = require('path').resolve;
+var path = require('path');
 
 var OAuth2 = google.auth.OAuth2;
 
@@ -27,7 +27,7 @@ var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 // load assistant API proto and bind using grpc
 const protoDescriptor = grpc.load({
     file: 'assistant/embedded/v1alpha2/embedded_assistant.proto',
-    root: resolve(__dirname, 'submodules/googleapis/google')
+    root: path.resolve(__dirname, 'submodules/googleapis/google')
 });
 
 const EmbeddedAssistantClient = protoDescriptor.google.assistant.embedded.v1alpha2.EmbeddedAssistant;
