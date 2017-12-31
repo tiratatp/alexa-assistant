@@ -54,7 +54,7 @@ var handlers = {
             this.emit(':tell', 'ERROR! API endpoint is not set')
         }
 
-        if (!this.event.session.user.accessToken) {
+        if (!this.event.session || !this.event.session.user.accessToken) {
             this.emit(':tellWithLinkAccountCard', "You must link your Google account to use this skill. Please use the link in the Alexa app to authorise your Google Account.");
         } else {
             this.emit(':ask', "How may I help?");
@@ -78,7 +78,10 @@ var handlers = {
             this.emit(':tell', 'ERROR! API endpoint is not set')
         }
 
-        if (!this.event.session.user.accessToken) {
+        console.log(this.event);
+        console.log(this.emit);
+
+        if (!this.event.session || !this.event.session.user.accessToken) {
             this.emit(':tellWithLinkAccountCard', "You must link your Google account to use this skill. Please use the link in the Alexa app to authorise your Google Account.");
             return;
         }
