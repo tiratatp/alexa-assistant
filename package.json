@@ -10,6 +10,9 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "express": "^4.16.2",
+    "body-parser": "^1.18.2",
+    "aws-lambda-mock-context": "^3.1.1",
     "alexa-sdk": "^1.0.24",
     "grpc": "^1.8.0",
     "googleapis": "^23.0.0",
