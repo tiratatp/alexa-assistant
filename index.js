@@ -1,4 +1,7 @@
 'use strict';
+
+/* adapted from https://gist.github.com/oprog/f7761f9c8034c0ee276b01233dd9a6b7 */
+
 var express = require("express");
 var bodyParser = require('body-parser');
 var context = require('aws-lambda-mock-context');

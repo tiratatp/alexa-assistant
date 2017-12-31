@@ -26,8 +26,8 @@ var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 // load assistant API proto and bind using grpc
 const protoDescriptor = grpc.load({
-    file: 'assistant/embedded/v1alpha2/embedded_assistant.proto',
-    root: path.resolve(__dirname, 'submodules/googleapis/google')
+    file: 'google/assistant/embedded/v1alpha2/embedded_assistant.proto',
+    root: path.resolve(__dirname, 'submodules/googleapis')
 });
 
 const EmbeddedAssistantClient = protoDescriptor.google.assistant.embedded.v1alpha2.EmbeddedAssistant;
