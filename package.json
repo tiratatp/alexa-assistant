@@ -1,0 +1,31 @@
+{
+  "name": "alexa-assistant",
+  "version": "0.0.1",
+  "description": "Implementation of the Google Assistant SDK as an Alexa skill",
+  "engines": {
+    "node": "8.9.3"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "alexa-sdk": "^1.0.24",
+    "grpc": "^1.8.0",
+    "googleapis": "^23.0.0",
+    "every-moment": "^0.0.1",
+    "wait-one-moment": "^0.0.2"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tiratatp/alexa-assistant"
+  },
+  "keywords": [
+    "node",
+    "alexa",
+    "google assistant"
+  ],
+  "license": "GPL-3.0"
+}
