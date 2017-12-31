@@ -13,12 +13,9 @@ const PORT = process.env.PORT || 5000;
 // your service will be available on <YOUR_IP>/alexa
 express()
 	.use(bodyParser.json({ type: 'application/json' }))
-	.get('/alexa/', (req, res) => {
-		return res.status(200).type('txt').send("hello world");
-	})
 	.post('/alexa/', (req, res) => {
 	    const ctx = context();
-	    lambda.handler(req.body, ctx);
+	    alexaAssistant.handler(req.body, ctx);
 	    ctx.Promise
 	        .then(resp => {  return res.status(200).json(resp); })
 	        .catch(err => {  console.log(err); })
