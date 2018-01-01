@@ -112,10 +112,7 @@ const handlers = {
             // Deal with RESULTS TYPE
             if (assistResponse.dialog_state_out) {
                 console.log('Result received');
-                if (assistResponse.dialog_state_out.supplemental_display_text) {
-                    console.log('Response text is: ' + JSON.stringify(assistResponse.dialog_state_out.supplemental_display_text));
-                    this.emit(':tell', assistResponse.dialog_state_out.supplemental_display_text);
-                }
+                var eventType = ':tell';
                 if (assistResponse.dialog_state_out.conversation_state) {
                     console.log('Conversation state changed');
                     conversation_state = assistResponse.dialog_state_out.conversation_state;
@@ -128,7 +125,12 @@ const handlers = {
                     } else if (assistResponse.dialog_state_out.microphone_mode === 'DIALOG_FOLLOW_ON') {
                         console.log('keeping microphone open');
                         microphoneOpen = true;
+                        eventType = ':ask';
                     }
+                }
+                if (assistResponse.dialog_state_out.supplemental_display_text) {
+                    console.log('Response text is: ' + JSON.stringify(assistResponse.dialog_state_out.supplemental_display_text));
+                    this.emit(eventType, assistResponse.dialog_state_out.supplemental_display_text);
                 }
             }
 
