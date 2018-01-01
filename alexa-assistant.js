@@ -82,7 +82,7 @@ const handlers = {
 
         var alexaUtteranceText = overrideText || this.event.request.intent.slots.search.value;
         console.log('Input text to be processed is "' + alexaUtteranceText + '"');
-        //console.log(this.event.session.user.accessToken);
+        console.log("AccessToken: " + this.event.session.user.accessToken);
 
         // authenticate against OAuth using session accessToken
         oauth2Client.credentials = {
@@ -113,7 +113,7 @@ const handlers = {
             if (assistResponse.dialog_state_out) {
                 console.log('Result received');
                 if (assistResponse.dialog_state_out.supplemental_display_text) {
-                    console.log('Response text is: ' + JSON.stringify(assistResponse.result.supplemental_display_text));
+                    console.log('Response text is: ' + JSON.stringify(assistResponse.dialog_state_out.supplemental_display_text));
                     this.emit(':tell', assistResponse.dialog_state_out.supplemental_display_text);
                 }
                 if (assistResponse.dialog_state_out.conversation_state) {
