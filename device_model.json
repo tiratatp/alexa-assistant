@@ -1,0 +1,10 @@
+{
+  "project_id": "alexa-assistant",
+  "device_model_id": "alexa-assistant-project-prototype-v1",
+  "manifest": {
+    "manufacturer": "Assistant SDK developer",
+    "product_name": "Assistant SDK prototype",
+    "device_description": "Assistant SDK prototype"
+  },
+  "device_type": "action.devices.types.LIGHT"
+}

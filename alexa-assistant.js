@@ -16,6 +16,7 @@ var CLIENT_SECRET = process.env.CLIENT_SECRET;
 var REDIRECT_URL = process.env.REDIRECT_URL;
 var API_ENDPOINT = process.env.API_ENDPOINT;
 var ALEXA_APP_ID = process.env.ALEXA_APP_ID;
+var ASSISTANT_DEVICE_ID = process.env.ASSISTANT_DEVICE_ID;
 
 var microphoneOpen;
 
@@ -146,6 +147,10 @@ const handlers = {
                 },
                 dialog_state_in: {
                     language_code: "en-US"
+                },
+                device_config: {
+                    device_id: ASSISTANT_DEVICE_ID,
+                    device_model_id: "alexa-assistant-project-prototype-v1"
                 },
                 text_query: alexaUtteranceText
             }
