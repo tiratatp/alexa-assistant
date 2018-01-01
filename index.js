@@ -15,8 +15,10 @@ const PORT = process.env.PORT || 5000;
 express()
 	.use(cors())
 	.use(bodyParser())
-	.post('/alexa/', (req, res) => {
-	    const ctx = context();
+	.post('/alexa', (req, res) => {
+	    const ctx = context({
+	    	timeout: 10
+	    });
 	    alexaAssistant.handler(req.body, ctx);
 	    ctx.Promise
 	        .then(resp => {  return res.status(200).json(resp); })
