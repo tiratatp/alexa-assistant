@@ -27,9 +27,8 @@ const protoDescriptor = grpc.load({
     root: resolve(__dirname, 'submodules/googleapis')
 });
 
-const EmbeddedAssistantClient = protoDescriptor.google.assistant.embedded.v1alpha2.EmbeddedAssistant;
-const embedded_assistant = protoDescriptor.google.assistant.embedded.v1alpha2;
-const callCreds = new grpc.Metadata();
+const EmbeddedAssistant = protoDescriptor.google.assistant.embedded.v1alpha2.EmbeddedAssistant;
+const metadata = new grpc.Metadata();
 
 // used by Google Assistant SDK
 var conversation_State = Buffer.alloc(0);
@@ -93,10 +92,10 @@ const handlers = {
         const callCreds = grpc.credentials.createFromGoogleCredential(oauth2Client);
         const channelCreds = grpc.credentials.createSsl(null);
         const combinedCreds = grpc.credentials.combineChannelCredentials(channelCreds, callCreds);
-        assistant = new EmbeddedAssistantClient(API_ENDPOINT, combinedCreds);
+        assistant = new EmbeddedAssistant(API_ENDPOINT, combinedCreds);
 
         // Create new GRPC stub to communicate with Assistant API
-        const conversation = assistant.assist(callCreds, {});
+        const conversation = assistant.assist(metadata, {});
 
         // Deal with errors from Google API
         // These aren't necessarily all bad unless they are fatal
