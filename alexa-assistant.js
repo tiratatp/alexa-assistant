@@ -85,9 +85,9 @@ const handlers = {
         console.log(this.event.session.user.accessToken);
 
         // authenticate against OAuth using session accessToken
-        oauth2Client.setCredentials({
+        oauth2Client.credentials = {
             access_token: this.event.session.user.accessToken
-        });
+        };
         const callCreds = grpc.credentials.createFromGoogleCredential(oauth2Client);
         const channelCreds = grpc.credentials.createSsl(null);
         const combinedCreds = grpc.credentials.combineChannelCredentials(channelCreds, callCreds);
