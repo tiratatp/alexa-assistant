@@ -124,6 +124,7 @@ const handlers = {
                     if (assistResponse.dialog_state_out.microphone_mode === 'CLOSE_MICROPHONE') {
                         console.log('closing microphone');
                         microphoneOpen = false;
+                        conversation.end();
                     } else if (assistResponse.dialog_state_out.microphone_mode === 'DIALOG_FOLLOW_ON') {
                         console.log('keeping microphone open');
                         microphoneOpen = true;
