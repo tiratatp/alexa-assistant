@@ -31,7 +31,7 @@ const EmbeddedAssistant = protoDescriptor.google.assistant.embedded.v1alpha2.Emb
 const metadata = new grpc.Metadata();
 
 // used by Google Assistant SDK
-var conversation_State = Buffer.alloc(0);
+var conversation_state = Buffer.alloc(0);
 
 const handlers = {
     // Sent when the user invokes your skill without providing a specific intent.
@@ -81,9 +81,7 @@ const handlers = {
 
         var alexaUtteranceText = overrideText || this.event.request.intent.slots.search.value;
         console.log('Input text to be processed is "' + alexaUtteranceText + '"');
-
-        console.log('Starting Google Assistant')
-        console.log(this.event.session.user.accessToken);
+        //console.log(this.event.session.user.accessToken);
 
         // authenticate against OAuth using session accessToken
         oauth2Client.credentials = {
@@ -115,17 +113,17 @@ const handlers = {
                 console.log('Result received');
                 if (assistResponse.dialog_state_out.supplemental_display_text) {
                     console.log('Response text is: ' + JSON.stringify(assistResponse.result.supplemental_display_text));
-                    this.emit(':tell', assistResponse.result.supplemental_display_text);
+                    this.emit(':tell', assistResponse.dialog_state_out.supplemental_display_text);
                 }
                 if (assistResponse.dialog_state_out.conversation_state) {
                     console.log('Conversation state changed');
-                    conversation_State = assistResponse.result.conversation_state;
+                    conversation_state = assistResponse.dialog_state_out.conversation_state;
                 }
                 if (assistResponse.dialog_state_out.microphone_mode) {
-                    if (assistResponse.result.microphone_mode === 'CLOSE_MICROPHONE') {
+                    if (assistResponse.dialog_state_out.microphone_mode === 'CLOSE_MICROPHONE') {
                         console.log('closing microphone');
                         microphoneOpen = false;
-                    } else if (assistResponse.result.microphone_mode === 'DIALOG_FOLLOW_ON') {
+                    } else if (assistResponse.dialog_state_out.microphone_mode === 'DIALOG_FOLLOW_ON') {
                         console.log('keeping microphone open');
                         microphoneOpen = true;
                     }
@@ -152,10 +150,11 @@ const handlers = {
                 text_query: alexaUtteranceText
             }
         };
-        if (conversation_State.length < 1) {
-            console.log('Prior ConverseResponse detected');
-            assistRequest.config.dialog_state_in.conversation_State = conversation_State;
+        if (conversation_state.length > 0) {
+            console.log('Prior conversation detected');
+            assistRequest.config.dialog_state_in.conversation_state = conversation_state;
         }
+        console.log(assistRequest);
 
         // Send request to Google Assistant API
         conversation.write(assistRequest);
