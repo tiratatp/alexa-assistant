@@ -38,7 +38,7 @@ var alexa = express();
 alexa.use(cors());
 alexa.use(bodyParser());
 
-alexa.post('/', function(request, response) {
+alexa.post('/alexa', function(request, response) {
 
     var lambdaCtx = LambdaMockContext();
 
