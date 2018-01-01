@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 // your service will be available on <YOUR_IP>/alexa
 express()
 	.use(cors())
-	.use(bodyParser())
+	.use(bodyParser.json())
 	.post('/alexa', (req, res) => {
 	    const ctx = context({
 	    	timeout: 10
