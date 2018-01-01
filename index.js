@@ -77,4 +77,4 @@ alexa.post('/alexa', function(request, response) {
 
 });
 
-app.listen(process.env.PORT || 5000);
+alexa.listen(process.env.PORT || 5000);
