@@ -17,6 +17,8 @@ var REDIRECT_URL = process.env.REDIRECT_URL;
 var API_ENDPOINT = process.env.API_ENDPOINT;
 var ALEXA_APP_ID = process.env.ALEXA_APP_ID;
 
+var microphoneOpen;
+
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 // load assistant API proto and bind using grpc
@@ -110,16 +112,17 @@ const handlers = {
             console.log(assistResponse);
 
             // Deal with RESULTS TYPE
-            if (assistResponse.result) {
+            if (assistResponse.dialog_state_out) {
                 console.log('Result received');
-                if (assistResponse.result.spoken_request_text) {
-                    console.log('Request text is: ' + JSON.stringify(assistResponse.result.spoken_request_text));
+                if (assistResponse.dialog_state_out.supplemental_display_text) {
+                    console.log('Response text is: ' + JSON.stringify(assistResponse.result.supplemental_display_text));
+                    this.emit(':tell', assistResponse.result.supplemental_display_text);
                 }
-                if (assistResponse.result.spoken_response_text) {
-                    console.log('Response text is: ' + JSON.stringify(assistResponse.result.spoken_response_text));
-                    this.emit(':tell', assistResponse.result.spoken_response_text);
+                if (assistResponse.dialog_state_out.conversation_state) {
+                    console.log('Conversation state changed');
+                    conversation_State = assistResponse.result.conversation_state;
                 }
-                if (assistResponse.result.microphone_mode) {
+                if (assistResponse.dialog_state_out.microphone_mode) {
                     if (assistResponse.result.microphone_mode === 'CLOSE_MICROPHONE') {
                         console.log('closing microphone');
                         microphoneOpen = false;
@@ -127,10 +130,6 @@ const handlers = {
                         console.log('keeping microphone open');
                         microphoneOpen = true;
                     }
-                }
-                if (assistResponse.result.conversation_state) {
-                    console.log('Conversation state changed');
-                    conversation_State = assistResponse.result.conversation_state;
                 }
             }
 
