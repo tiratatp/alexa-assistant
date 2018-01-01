@@ -58,6 +58,7 @@ app.post('/alexa', function(request, response) {
             this.emit(':tell', 'Good Bye!');
         },
         'Unhandled': function() {
+        	console.log(this.event);
             this.emit(':tell', 'What\'s up?');
         },
     };

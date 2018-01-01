@@ -34,7 +34,7 @@ var conversation_State = Buffer.alloc(0);
 
 const handlers = {
     // Sent when the user invokes your skill without providing a specific intent.
-    'LaunchRequest': () => {
+    'LaunchRequest': function() {
         // Check for required environment variables and throw spoken error if not present
         if (!CLIENT_ID) {
             this.emit(':tell', 'ERROR! Client ID is not set')
@@ -56,7 +56,7 @@ const handlers = {
         };
     },
 
-    'SearchIntent': (overrideText) => {
+    'SearchIntent': function(overrideText) {
         console.log('Starting Search Intent')
 
         // Check for required environment variables and throw spoken error if not present
@@ -167,28 +167,28 @@ const handlers = {
     // We need to close the conversation if an ask response is not given (which will end up here)
     // The easiset way to do this is to just send a stop command and this will close the conversation for us
     // (this is against Amazons guides but we're not submitting this!)
-    'Unhandled': () => {
+    'Unhandled': function() {
         console.log('Unhandled event');
         if (microphoneOpen) {
             this.emit('SearchIntent', 'STOP');
         }
     },
 
-    'AMAZON.StopIntent': () => {
+    'AMAZON.StopIntent': function() {
         console.log('Stop Intent')
         if (microphoneOpen) {
             this.emit('SearchIntent', 'STOP');
         }
     },
 
-    'AMAZON.CancelIntent': () => {
+    'AMAZON.CancelIntent': function() {
         console.log('Cancel Intent');
         if (microphoneOpen) {
             this.emit('SearchIntent', 'CANCEL');
         }
     },
 
-    'SessionEndedRequest': () => {
+    'SessionEndedRequest': function() {
         console.log(`Session has ended with reason ${this.event.request.reason}`)
         if (microphoneOpen) {
             this.emit('SearchIntent', 'STOP');
